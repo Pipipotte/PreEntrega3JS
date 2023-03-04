@@ -32,7 +32,15 @@ btnVaciarCarrito.addEventListener("click", btnVaciarCarritoResp);
 
 carritoLocalStorage = JSON.parse(localStorage.getItem("carritoLocalStorage"));
 if(carritoLocalStorage == null){
+    let arrayCarrito = localStorage.getItem("carritoLocalStorageNum");
     console.log("carrito vacío")
+    console.log(arrayCarrito);
+    if(arrayCarrito == null){
+        console.log("es null")
+        totalCarrito();
+    }else{
+        console.log("no es null")
+    };
 } else {
     console.log("lleno");
     arrayServicios = carritoLocalStorage;
@@ -45,7 +53,44 @@ if(carritoLocalStorage == null){
     
                         divCarritoCard.appendChild(div);
     });
+    totalCarrito();
     console.log(arrayServicios);
+};
+function totalCarrito(){
+    carritoTotal.innerHTML=""
+    let div = document.createElement("div");
+    let arrayCarrito = localStorage.getItem("carritoLocalStorageNum");
+    if(arrayCarrito == null){
+        console.log("es null")
+        div.className = "carritoTotalDiv";
+        div.innerHTML= `<p>0</p>`;
+        carritoTotal.appendChild(div);
+        console.log("El total a pagar es de:");
+        console.log(arrayCarrito); 
+    }else{
+        console.log("no es null")
+        div.className = "carritoTotalDiv";
+        div.innerHTML= `<p>${arrayCarrito}</p>`;
+        carritoTotal.appendChild(div);
+        console.log("El total a pagar es de:");
+        console.log(arrayCarrito); 
+    };
+    /*     
+    div.className = "carritoTotalDiv";
+    div.innerHTML= `${arrayCarrito}`;
+    carritoTotal.appendChild(div);
+    console.log("El total a pagar es de:");
+    console.log(arrayCarrito); 
+    */
+};
+
+function guardarCarritoNumLocalStorage(){
+    localStorage.setItem( "carritoLocalStorageNum", arrayCarrito);
+    carritoLocalStorageNum = localStorage.getItem("carritoLocalStorageNum");
+};
+function guardarArrayServiciosLocalStorage(){
+    localStorage.setItem( "carritoLocalStorage", JSON.stringify(arrayServicios));
+    carritoLocalStorage = JSON.parse(localStorage.getItem("carritoLocalStorage"));
 };
 
 function btnClickBrandingCarritoResp(){
@@ -53,6 +98,7 @@ function btnClickBrandingCarritoResp(){
     arrayServicios.push(branding);
     console.log("■ ■ Método reduce carrito ■ ■");
     arrayCarrito = arrayServicios.reduce((acumulador, elemento)=> acumulador + elemento.precio, 0);
+    console.log("carrito tiene");
     console.log(arrayCarrito);
     divCarritoCard.innerHTML=""
     arrayServicios.forEach(producto => {
@@ -64,8 +110,11 @@ function btnClickBrandingCarritoResp(){
                         divCarritoCard.appendChild(div);
     });
     console.log(arrayServicios);
-    localStorage.setItem( "carritoLocalStorage", JSON.stringify(arrayServicios));
-    carritoLocalStorage = JSON.parse(localStorage.getItem("carritoLocalStorage"));
+
+    guardarCarritoNumLocalStorage();
+    guardarArrayServiciosLocalStorage();
+    totalCarrito();
+
 }
 function btnClickFrontendCarritoResp(){
     console.log("Botón clickeado");
@@ -83,8 +132,10 @@ function btnClickFrontendCarritoResp(){
                         divCarritoCard.appendChild(div);
     });
     console.log(arrayServicios);
-    localStorage.setItem( "carritoLocalStorage", JSON.stringify(arrayServicios));
-    carritoLocalStorage = JSON.parse(localStorage.getItem("carritoLocalStorage"));
+
+    guardarCarritoNumLocalStorage();
+    guardarArrayServiciosLocalStorage();
+    totalCarrito();
 }
 function btnClickUxUiCarritoResp(){
     console.log("Botón clickeado");
@@ -102,17 +153,20 @@ function btnClickUxUiCarritoResp(){
                         divCarritoCard.appendChild(div);
     });
     console.log(arrayServicios);
-    localStorage.setItem( "carritoLocalStorage", JSON.stringify(arrayServicios));
-    carritoLocalStorage = JSON.parse(localStorage.getItem("carritoLocalStorage"));
+    guardarCarritoNumLocalStorage();
+    guardarArrayServiciosLocalStorage();
+    totalCarrito()
 }
 function btnVaciarCarritoResp(){
     console.log("Vaciar carrito");
     divCarritoCard.innerHTML=""
     arrayServicios = [];
     localStorage.clear("carritoLocalStorage");
+    localStorage.clear("carritoLocalStorageNum");
     carritoLocalStorage = localStorage;
     console.log(arrayServicios);
     console.log(carritoLocalStorage)
+    totalCarrito();
 }
 function carritoCards(){
 /*     div.innerHTML="" */
@@ -129,74 +183,6 @@ function descuento(arrayCarrito, descuentoNum,){
     return arrayCarrito;
 }
 
-function compraItem(){
-    let compra = prompt("¿Qué servicio desea adquirir? ☛ Branding, Frontend, UX/UI, ");
-    switch (compra) {
-        case "branding":
-            if (compra == "branding"){
-                arrayServicios.push(branding);
-
-                console.log( "Usted está por adquirir el siguiente servicio: " + branding.nombre + ", por el valor de: $" + branding.precio)
-                alert( "Usted está por adquirir el siguiente servicio: " + branding.nombre + ", por el valor de: $" + branding.precio)
-
-                console.log("■ ■ Método reduce carrito ■ ■");
-                arrayCarrito = arrayServicios.reduce((acumulador, elemento)=> acumulador + elemento.precio, 0);
-                console.log(arrayCarrito);
-
-                seguirComprando(arrayServicios);
-                return arrayCarrito;
-            }
-            break;
-        case "frontend":
-            if (compra == "frontend"){
-                arrayServicios.push(frontend);
-
-                console.log( "Usted está por adquirir el siguiente servicio: " + frontend.nombre + ", por el valor de: $" + frontend.precio)
-                alert( "Usted está por adquirir el siguiente servicio: " + frontend.nombre + ", por el valor de: $" + frontend.precio)
-
-                console.log("■ ■ Método reduce carrito ■ ■");
-                arrayCarrito = arrayServicios.reduce((acumulador, elemento)=> acumulador + elemento.precio, 0);
-                console.log(arrayCarrito);
-                seguirComprando(arrayServicios);
-                return arrayCarrito;
-            }
-            break;
-        case "ux/ui":
-            if (compra == "ux/ui"){
-                arrayServicios.push(UXUI);
-
-                console.log( "Usted está por adquirir el siguiente servicio: " + UXUI.nombre + ", por el valor de: $" + UXUI.precio)
-                alert( "Usted está por adquirir el siguiente servicio: " + UXUI.nombre + ", por el valor de: $" + UXUI.precio)
-
-                console.log("■ ■ Método reduce carrito ■ ■");
-                arrayCarrito = arrayServicios.reduce((acumulador, elemento)=> acumulador + elemento.precio, 0);
-                console.log(arrayCarrito);
-
-                seguirComprando(arrayServicios);
-                return arrayCarrito;
-            }
-            break
-        case "uxui":
-            if (compra == "uxui"){
-                arrayServicios.push(UXUI);
-
-                console.log( "Usted está por adquirir el siguiente servicio: " + UXUI.nombre + ", por el valor de: $" + UXUI.precio)
-                alert( "Usted está por adquirir el siguiente servicio: " + UXUI.nombre + ", por el valor de: $" + UXUI.precio)
-
-                console.log("■ ■ Método reduce carrito ■ ■");
-                arrayCarrito = arrayServicios.reduce((acumulador, elemento)=> acumulador + elemento.precio, 0);
-                console.log(arrayCarrito);
-
-                seguirComprando(arrayServicios);
-                return arrayCarrito;
-            }
-            break;
-        default:
-            alert(`No ingresó un servicio del listado, intente de nuevo`);
-            compraItem();
-    } 
-};
-
 function descuentoPreg(arrayCarrito,arrayServiciosString){
     if (prompt(`Está por adquirir el/los servicio/s de: `+ arrayServiciosString + ` por un total de $${arrayCarrito}` +`, ingrese código de descuento, de no disponer de uno deje en blanco (cod: 1234)`) == 1234){
         arrayCarrito = [parseInt(descuento(arrayCarrito, descuentoNum))];
@@ -228,146 +214,8 @@ function seguirComprando(){
         descuentoPreg(arrayCarrito,arrayServiciosString);
     }
 };
-
-/* compraItem(); */
 
 //Esto es para cambiar los precios automáticamente solo con cambiar los const del principio del script.js :D
 servicioBrandingPrecio.innerHTML = "$" + branding.precio;
 servicioFrontendPrecio.innerHTML = "$" + frontend.precio;
 servicioUxUiPrecio.innerHTML = "$" + UXUI.precio;
-
-/* arrayServicios.forEach(producto => {
-
-    let div = document.createElement("divCarrito");
-
-    div.innerHTML= `<p> Servicio : ${producto.nombre} </p>
-                    <p> Precio : ${producto.precio} </p>`;
-
-                    divCarrito.appendChild(div);
-}) */
-
-
-/* 
-class Producto {
-    constructor(nombre,precio){
-        this.nombre = nombre;
-        this.precio = precio;
-    }
-}
-
-const branding = new Producto ("Branding", 1000);
-const frontend = new Producto ("Frontend", 1500);
-const UXUI = new Producto ("UxUi", 2200);
-const descuentoNum = 0.8;
-
-let arrayCarrito = [0];
-let arrayServicios = [];
-console.log("El carrito tiene: $"+ arrayCarrito)
-
-function descuento(arrayCarrito, descuentoNum,){
-    arrayCarrito = arrayCarrito * descuentoNum;
-    return arrayCarrito;
-}
-
-function compraItem(){
-    let compra = prompt("¿Qué servicio desea adquirir? ☛ Branding, Frontend, UX/UI, ");
-    switch (compra) {
-        case "branding":
-            if (compra == "branding"){
-                arrayServicios.push(branding);
-
-                console.log( "Usted está por adquirir el siguiente servicio: " + branding.nombre + ", por el valor de: $" + branding.precio)
-                alert( "Usted está por adquirir el siguiente servicio: " + branding.nombre + ", por el valor de: $" + branding.precio)
-
-                console.log("■ ■ Método reduce carrito ■ ■");
-                arrayCarrito = arrayServicios.reduce((acumulador, elemento)=> acumulador + elemento.precio, 0);
-                console.log(arrayCarrito);
-
-                seguirComprando(arrayServicios);
-                return arrayCarrito;
-            }
-            break;
-        case "frontend":
-            if (compra == "frontend"){
-                arrayServicios.push(frontend);
-
-                console.log( "Usted está por adquirir el siguiente servicio: " + frontend.nombre + ", por el valor de: $" + frontend.precio)
-                alert( "Usted está por adquirir el siguiente servicio: " + frontend.nombre + ", por el valor de: $" + frontend.precio)
-
-                console.log("■ ■ Método reduce carrito ■ ■");
-                arrayCarrito = arrayServicios.reduce((acumulador, elemento)=> acumulador + elemento.precio, 0);
-                console.log(arrayCarrito);
-                seguirComprando(arrayServicios);
-                return arrayCarrito;
-            }
-            break;
-        case "ux/ui":
-            if (compra == "ux/ui"){
-                arrayServicios.push(UXUI);
-
-                console.log( "Usted está por adquirir el siguiente servicio: " + UXUI.nombre + ", por el valor de: $" + UXUI.precio)
-                alert( "Usted está por adquirir el siguiente servicio: " + UXUI.nombre + ", por el valor de: $" + UXUI.precio)
-
-                console.log("■ ■ Método reduce carrito ■ ■");
-                arrayCarrito = arrayServicios.reduce((acumulador, elemento)=> acumulador + elemento.precio, 0);
-                console.log(arrayCarrito);
-
-                seguirComprando(arrayServicios);
-                return arrayCarrito;
-            }
-            break
-        case "uxui":
-            if (compra == "uxui"){
-                arrayServicios.push(UXUI);
-
-                console.log( "Usted está por adquirir el siguiente servicio: " + UXUI.nombre + ", por el valor de: $" + UXUI.precio)
-                alert( "Usted está por adquirir el siguiente servicio: " + UXUI.nombre + ", por el valor de: $" + UXUI.precio)
-
-                console.log("■ ■ Método reduce carrito ■ ■");
-                arrayCarrito = arrayServicios.reduce((acumulador, elemento)=> acumulador + elemento.precio, 0);
-                console.log(arrayCarrito);
-
-                seguirComprando(arrayServicios);
-                return arrayCarrito;
-            }
-            break;
-        default:
-            alert(`No ingresó un servicio del listado, intente de nuevo`);
-            compraItem();
-    } 
-};
-
-function descuentoPreg(arrayCarrito,arrayServiciosString){
-    if (prompt(`Está por adquirir el/los servicio/s de: `+ arrayServiciosString + ` por un total de $${arrayCarrito}` +`, ingrese código de descuento, de no disponer de uno deje en blanco (cod: 1234)`) == 1234){
-        arrayCarrito = [parseInt(descuento(arrayCarrito, descuentoNum))];
-        alert(`Descuento aplicado, total a pagar: $`+ arrayCarrito);
-        console.log("Descuento aplicado, total a pagar: $", arrayCarrito);
-        return arrayCarrito;
-    } else {
-        alert(`Total a pagar: $${arrayCarrito}`);
-        console.log(`No se aplicó el descuento, total a pagar: $${arrayCarrito}`);
-    }
-};
-
-function seguirComprando(){
-
-    console.log("■ ■ Método map ■ ■");
-    const arrayServiciosMap = arrayServicios.map((producto)=>{
-        return producto.nombre;
-    });
-    console.log(arrayServiciosMap);
-
-    console.log("■ ■ Método join ■ ■");
-    let arrayServiciosString = arrayServiciosMap.join(" | ");
-    console.log(arrayServiciosString);
-
-
-    if (prompt(`Se añadió el servicio al carrito, desea adquirir algún otro? (s/n)`) == "s"){
-        compraItem();
-    } else {
-        descuentoPreg(arrayCarrito,arrayServiciosString);
-    }
-};
-
-compraItem();
- */
