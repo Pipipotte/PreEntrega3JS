@@ -141,8 +141,10 @@ p {
   padding: 12px;
   max-width: 500px;
   gap: 10px;
+  justify-content: center;
 }
 .caratula .contenedor .carritoContenedor .carritoContenedorDiv .divCarrito .divCarritoServicio {
+  width: 130px;
   padding: 12px;
   background-color: #fcf3c3;
 }
