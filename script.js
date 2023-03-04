@@ -232,9 +232,9 @@ function seguirComprando(){
 /* compraItem(); */
 
 //Esto es para cambiar los precios automáticamente solo con cambiar los const del principio del script.js :D
-ServicioBrandingPrecio.innerHTML = branding.precio;
-ServicioFrontendPrecio.innerHTML = frontend.precio;
-ServicioUxUiPrecio.innerHTML = UXUI.precio;
+servicioBrandingPrecio.innerHTML = "$" + branding.precio;
+servicioFrontendPrecio.innerHTML = "$" + frontend.precio;
+servicioUxUiPrecio.innerHTML = "$" + UXUI.precio;
 
 /* arrayServicios.forEach(producto => {
 
