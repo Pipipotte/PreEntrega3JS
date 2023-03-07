@@ -178,12 +178,12 @@ function carritoCards(){
     });
 }
 
-function descuento(arrayCarrito, descuentoNum,){
+/* function descuento(arrayCarrito, descuentoNum,){
     arrayCarrito = arrayCarrito * descuentoNum;
     return arrayCarrito;
 }
-
-function descuentoPreg(arrayCarrito,arrayServiciosString){
+ */
+/* function descuentoPreg(arrayCarrito,arrayServiciosString){
     if (prompt(`Está por adquirir el/los servicio/s de: `+ arrayServiciosString + ` por un total de $${arrayCarrito}` +`, ingrese código de descuento, de no disponer de uno deje en blanco (cod: 1234)`) == 1234){
         arrayCarrito = [parseInt(descuento(arrayCarrito, descuentoNum))];
         alert(`Descuento aplicado, total a pagar: $`+ arrayCarrito);
@@ -193,9 +193,9 @@ function descuentoPreg(arrayCarrito,arrayServiciosString){
         alert(`Total a pagar: $${arrayCarrito}`);
         console.log(`No se aplicó el descuento, total a pagar: $${arrayCarrito}`);
     }
-};
+}; */
 
-function seguirComprando(){
+/* function seguirComprando(){
 
     console.log("■ ■ Método map ■ ■");
     const arrayServiciosMap = arrayServicios.map((producto)=>{
@@ -213,7 +213,7 @@ function seguirComprando(){
     } else {
         descuentoPreg(arrayCarrito,arrayServiciosString);
     }
-};
+}; */
 
 //Esto es para cambiar los precios automáticamente solo con cambiar los const del principio del script.js :D
 servicioBrandingPrecio.innerHTML = "$" + branding.precio;
